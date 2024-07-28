@@ -1,0 +1,40 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  tasks:
+
+    - name: user archi is created
+      user:
+        name=archi
+
+    - name: installing httpd package
+      yum:
+        name=httpd
+        state=present
+
+    - name: adding user1
+      user:
+        name: anush
+        shell: /bin/bash
+        home: /home/anush
+    - name: adding user2
+      user:
+        name: arusha
+        shell: /bin/bash
+        home: /home/arusha
+    - name: A new group
+      group:
+        name: admin
+    - name: adding user3
+      ansible.builtin.user:
+        name: arham
+        comment: arham jain
+        group: admin
+    - name: Creating a ssh-key for new user and adding arnik into admin group
+      user:
+        name: arnik
+        group: admin
+        generate_ssh_key: yes
+        ssh_key_bits: 2048
+        ssh_key_file: .ssh/id_rsa
